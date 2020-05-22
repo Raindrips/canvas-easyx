@@ -1,16 +1,13 @@
-// Ñ©»¨Í¼°¸.cpp
+
 #include <easyx.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-
-int wid = 600;		//Í¼ĞÎ´°¿ÚµÄ´óĞ¡
+int wid = 600;		//å›¾åƒå¤§å°
 
 /*
- * x,y Ô²µÄ×ø±ê
- * r Ô²µÄ°ë¾¶
- * step Ô²ÍùÏÂÃæ»æÖÆµÄ¾àÀë
- * depth Ã¿´Îµİ¹éµÄÊı¾İ
+ * x,y åœ†
+ * r åœ†åŠå¾„
  */
 void drawCircle(int x, int y, int r, int step, int depth)
 {
@@ -20,7 +17,7 @@ void drawCircle(int x, int y, int r, int step, int depth)
 	}
 	if (depth % 3 == 1)
 	{
-		setlinecolor(0xff3333); //À¶É«
+		setlinecolor(0xff3333); //é¢œè‰²
 	}
 	else if (depth % 3 == 2)
 	{
@@ -38,30 +35,28 @@ void test1()
 {
 	initgraph(wid, wid);
 	int x = wid / 2;
-	int y = wid / 2;  //¼ÆËãÔ²µÄÖĞĞÄµã
+	int y = wid / 2;  
 	circle(x, y, wid / 2);
 	drawCircle(x, y, wid / 2, 3, 1);
 }
 
-/*»æÖÆÑ©»¨
- *
- */
+
 void drawSnow(int x, int y, float w, float h, int depth,int step)
 {
-	if (w <= 1 || depth >= step)	//µİ¹éÒ»¶¨ÒªÓĞ½áÊøÌõ¼ş
+	if (w <= 1 || depth >= step)	
 	{
 		setfillcolor(RGB(0x33,0xcc,0xff));
 		setlinecolor(RGB(0x00, 0xff, 0xff));
 		fillrectangle(x, y, x + max(w, 1), y + max(h, 1));
 		return;
 	}
-	float p = w / 3;   //¼ÆËãÕı·½ĞÎ/3Ö®ºóµÄ¾àÀë
+	float p = w / 3;  
 
-	drawSnow(x + p, y, p, p, depth + 1,step);		//x+p  ±íÊ¾ ÉÏÃæÄÇ¸ö·½¿éµÄÒ»¸ö¾àÀë	
-	drawSnow(x, y + p, p, p, depth + 1, step);		//y+p  ±íÊ¾×ó±ßÄÇ¸ö·½¿éÎ»ÖÃ
-	drawSnow(x + p, y + p, p, p, depth + 1, step);	//x+p y+p ±íÊ¾ÖĞ¼äÄÇÒ»¸ö·½¿é
-	drawSnow(x + p * 2, y + p, p, p, depth + 1, step);//x+p*2   ±íÊ¾ÓÒ±ßµÄÄÇ¸ö·½¿é
-	drawSnow(x + p, y + p * 2, p, p, depth + 1, step);//y+p*2		±íÊ¾ÏÂÃæÄÇ¸ö·½¿é
+	drawSnow(x + p, y, p, p, depth + 1,step);	
+	drawSnow(x, y + p, p, p, depth + 1, step);
+	drawSnow(x + p, y + p, p, p, depth + 1, step);	
+	drawSnow(x + p * 2, y + p, p, p, depth + 1, step);
+	drawSnow(x + p, y + p * 2, p, p, depth + 1, step);
 	
 }
 
