@@ -106,6 +106,29 @@ public:
 	}
 	EndBatchDraw();
   }
+  void drawArr(vector<int>& v, int l, int mid, int r) {
+	  BeginBatchDraw();
+	  cleardevice();
+	  for (int i = 0; i < v.size(); i++)
+	  {
+		  if (i < l)
+		  {
+			  Rect(i, v[i], 0x3333aa);
+		  }
+		  else if (i > r)
+		  {
+			  Rect(i, v[i], 0x33ccdd);
+		  }
+		  else if (i == mid)
+		  {
+			  Rect(i, v[i], 0xcc33dd);
+		  }
+		  else {
+			  Rect(i, v[i], 0x66dd33);
+		  }
+	  }
+	  EndBatchDraw();
+  }
 
   void random(int l, int r) {
 	for (size_t i = 0; i < vec.size(); i++)
@@ -197,7 +220,7 @@ private:
 
   void merge(int l, int mid, int r) {
 	vector<int> aux(vec.begin() + l, vec.begin() + r + 1);
-	int lk = l, rk = mid + 1;
+	size_t lk = l, rk = mid + 1;
 	for (int i = l; i <= r; i++)
 	{
 	  if (lk > mid)
@@ -217,6 +240,8 @@ private:
 		vec[i] = aux[rk - l];
 		rk++;
 	  }
+	  drawArr(vec, l, mid, r);
+	  Sleep(speed);
 	}
   }
 
@@ -240,9 +265,13 @@ private:
 	  {
 		p++;
 		swap(vec[i], vec[p]);
+		drawArr(vec, l, p, r);
+		Sleep(speed);
 	  }	
 	}
 	swap(vec[l], vec[p]);
+	drawArr(vec, l, p, r);
+	Sleep(speed);
 	return p;
   }
 
@@ -261,7 +290,7 @@ ostream& operator<<(ostream& os, const SortGraph& sg)
 //主函数
 int main()
 {
-  vector<int> v(20, 0);
+  vector<int> v(50, 0);
   SortGraph s(v);
   s.setSpeed(100);
   s.random(10, s.hei);
@@ -272,10 +301,9 @@ int main()
   //插入排序
   //s.insertSort();
   //归并排序
-  //s.mergeSort();
+  s.mergeSort();
   //快速排序
-  s.quickSort();
+  //s.quickSort();
   cout << s << endl;
- //int a = printf("1\n"), b = printf("12\n"), c = printf("123\n");
   return getchar();
 }
