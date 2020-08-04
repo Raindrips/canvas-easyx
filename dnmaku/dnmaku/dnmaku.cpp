@@ -1,4 +1,4 @@
-// dnmaku.cpp 
+ï»¿// dnmaku.cpp 
 #include "stdafx.h"
 #include <easyx.h>
 #include <cmath>
@@ -10,16 +10,16 @@
 #include <vector>
 
 namespace M{
-  //×ø±êÀà
+  //åæ ‡ç±»
   class Vec2{
   public:
 	float x;
 	float y;
 	Vec2(float x = 0, float y = 0) :x(x), y(y){}
   };
-  static double const PI = 3.1415926;		//PIµÄÖµ
+  static double const PI = 3.1415926;		//PIçš„å€¼
 
-  //½Ç¶È×ª»¡¶È
+  //è§’åº¦è½¬å¼§åº¦
   float radin(float angle){
 	return angle*PI / 180.0;
   }
@@ -27,20 +27,20 @@ namespace M{
 using namespace M;
 using namespace std;
 
-//×Óµ¯Àà
+//å­å¼¹ç±»
 class Bullet{
 protected:
-  float angle;		//½Ç¶È
+  float angle;		//è§’åº¦
 public:
-  Vec2 p;			//×ø±êÎ»ÖÃ
-  Vec2 s;			//ËÙ¶È
+  Vec2 p;			//åæ ‡ä½ç½®
+  Vec2 s;			//é€Ÿåº¦
 
-  int r;			//×Óµ¯°ë¾¶
-  COLORREF color;	//ÑÕÉ«
+  int r;			//å­å¼¹åŠå¾„
+  COLORREF color;	//é¢œè‰²
   Bullet(Vec2 p, int r = 0, float angle = 0)
 	:p(p), r(r), angle(angle){}
 
-  //ÉèÖÃ½Ç¶È
+  //è®¾ç½®è§’åº¦
   void setAngle(float angle){
 	if (angle > 360){
 	  angle = (int)angle % 360;
@@ -51,17 +51,17 @@ public:
 	//cout << angle << endl;
 	this->angle = angle;
   }
-  //»ñÈ¡½Ç¶È
+  //è·å–è§’åº¦
   float getAngle(){
 	return angle;
   }
 
-  //ÉèÖÃËÙ¶È
+  //è®¾ç½®é€Ÿåº¦
   void setSpeed(float speed){
 	s.x = cos(radin(angle))*speed;
 	s.y = sin(radin(angle))*speed;
   }
-  //ÒÆ¶¯×Óµ¯
+  //ç§»åŠ¨å­å¼¹
   void update(){
 	p.x += s.x;
 	p.y += s.y;
@@ -69,21 +69,21 @@ public:
 };
 
 
-//µ¯Ä»Àà
+//å¼¹å¹•ç±»
 class Danmaku{
-  int wid = 600;						//ÆÁÄ»¿í¶È
-  float speed = 6;				//×Óµ¯ËÙ¶È
+  int wid = 600;						//å±å¹•å®½åº¦
+  float speed = 6;				//å­å¼¹é€Ÿåº¦
   float count = 0;
   float accept = 0.2;
   bool flag = true;
   IMAGE img;
   IMAGE xxy;
-  deque<vector<Bullet>> bullets;	//´æ·Å×Óµ¯µÄÈİÆ÷
+  deque<vector<Bullet>> bullets;	//å­˜æ”¾å­å¼¹çš„å®¹å™¨
 
-  //µÚÒ»ÖÖµ¯Ä»
+  //ç¬¬ä¸€ç§å¼¹å¹•
   void _flowering(){
-	Vec2 center(wid / 2, wid / 2);		//»ñÈ¡ÖĞĞÄµã
-	//25 Ã¿È¦×Óµ¯µÄ´óĞ¡		
+	Vec2 center(wid / 2, wid / 2);		//è·å–ä¸­å¿ƒç‚¹
+	//25 æ¯åœˆå­å¼¹çš„å¤§å°		
 	vector<Bullet> bt(30, Bullet(center, wid / 90));
 
 	float step = 360.0 / bt.size();
@@ -109,12 +109,12 @@ class Danmaku{
 	bullets.push_back(bt);
   }
 
-  //µÚ¶şÖÖµ¯Ä»
+  //ç¬¬äºŒç§å¼¹å¹•
   float range = 1;
   float ra = 0.8;
   void _flowering2(){
-	Vec2 center(wid / 2, wid / 2);		//»ñÈ¡ÖĞĞÄµã
-	//25 Ã¿È¦×Óµ¯µÄ´óĞ¡		
+	Vec2 center(wid / 2, wid / 2);		//è·å–ä¸­å¿ƒç‚¹
+	//25 æ¯åœˆå­å¼¹çš„å¤§å°		
 	vector<Bullet> bt(60, Bullet(center, wid / 90));
 
 	float step = 360.0 / bt.size();
@@ -133,16 +133,16 @@ class Danmaku{
 	bullets.push_back(bt);
   }
 
-  //µÚÈıÖÖµ¯Ä»
+  //ç¬¬ä¸‰ç§å¼¹å¹•
   void _flowering3(){
-	Vec2 center(wid / 2, wid / 2);		//»ñÈ¡ÖĞĞÄµã
-	//Ã¿È¦µÄ×Óµ¯ÊıÁ¿  Ã¿È¦×Óµ¯µÄ´óĞ¡		
+	Vec2 center(wid / 2, wid / 2);		//è·å–ä¸­å¿ƒç‚¹
+	//æ¯åœˆçš„å­å¼¹æ•°é‡  æ¯åœˆå­å¼¹çš„å¤§å°		
 	vector<Bullet> bt(12, Bullet(center, wid / 120));
 
 	float step = 360.0 / bt.size();
 	float i = count;
 
-	//ÉèÖÃÆ«ÒÆ½ÇµÄ¼ÓËÙ¶È
+	//è®¾ç½®åç§»è§’çš„åŠ é€Ÿåº¦
 	count -= accept;
 	accept -= 0.24;
 	for (auto &e : bt)
@@ -155,7 +155,7 @@ class Danmaku{
 	bullets.push_back(bt);
   }
 
-  //»æÖÆ½çÃæ
+  //ç»˜åˆ¶ç•Œé¢
   void _draw(){
 	BeginBatchDraw();
 	cleardevice();
@@ -163,13 +163,13 @@ class Danmaku{
 	{
 	  for (auto &e : e2)
 	  {
-		//ÉèÖÃ×Óµ¯ÑÕÉ«
+		//è®¾ç½®å­å¼¹é¢œè‰²
 		setfillcolor(e.color);
-		//Ìî³äÑÕÉ«
-		solidcircle(e.p.x, e.p.y, e.r);
-		//Ìî³äÍ¼°¸
-		//putimage(e.p.x, e.p.y, &img);
-		//×Óµ¯¸üĞÂ
+		//å¡«å……é¢œè‰²
+		//solidcircle(e.p.x, e.p.y, e.r);
+		//å¡«å……å›¾æ¡ˆ
+		putimage(e.p.x, e.p.y, &img);
+		//å­å¼¹æ›´æ–°
 		e.update();
 	  }
 	}
@@ -184,12 +184,12 @@ public:
 	loadimage(&img, _T("XXY.png"), wid / 20,wid/20);
   }
 
-  //¿ªÊ¼Ö´ĞĞ
+  //å¼€å§‹æ‰§è¡Œ
   void start(){
 	while (true)
 	{
 	  _draw();
-	  //20Ö¡µ÷ÓÃÒ»´Î
+	  //20å¸§è°ƒç”¨ä¸€æ¬¡
 	  if (a % 2 == 0)
 	  {
 		//_flowering();
